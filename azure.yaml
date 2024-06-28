@@ -1,17 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
 name: summarization-openai-csharp-prompty
 metadata:
-  template: summarization-openai-csharp-prompty@0.0.1
-hooks:
-  postprovision:
-    posix:
-      shell: sh
-      continueOnError: false
-      interactive: true
-      run: infra/hooks/postprovision.sh
-    windows:
-      shell: pwsh
-      continueOnError: false
-      interactive: true
-      run: infra/hooks/postprovision.ps1
-infra:
-    provider: "bicep"
+    template: summarization-openai-csharp-prompty
+services:
+    SummarizationAPI:
+        project: src/SummarizationAPI/SummarizationAPI
+        host: containerapp
+        language: dotnet
+        docker:
+            path: Dockerfile
+    SummarizationAPI_Console:
+        project: src/SummarizationAPI/SummarizationAPI.Console
+        host: containerapp
+        language: dotnet
